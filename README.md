@@ -1,6 +1,6 @@
 # TP2_BURDET_CHENIOUR
 
-## Exercice 1. Variables d’environnement
+### Exercice 1. Variables d’environnement
 
 1. ```/home/serveur/.bash_history``` est le dossier bash on l'on trouve les commandes tapées par l’utilisateur.
 2. ```$HOME``` est la variable qui permet à la commande ```cd``` de nous ramener dans notre répertoire personnel.
@@ -20,4 +20,121 @@ Puis en tapant ```bash```, notre variable MY_VAR existe toujours.
 8. ```echo "Bonjour à vous deux, $NOMS !"```
 9. ```unset``` détruit la variable alors que donner une valeur vide met juste une valeur vide dans la variable.
 10. ```echo "\$HOME = $HOME"```
+
+## Programmation Bash
+
+```mkdir script```
+```PATH=$PATH:/$HOME/script``` ajouter le chemin vers script dans PATH
+
+### Exercice 2. Contrôle de mot de passe
+
+```touch testpwd.sh```
+```vim testpwd.sh```
+```chmod u+x testpwd.sh```
+```./testpwd.sh```
+Le script : 
+```
+#!/bin/bash
+PASSWORD="pa33word";
+read -s -p "Entrer votre mot de passe:" userpass
+if [ $PASSWORD = $userpass ]
+then
+    echo -e "\nSuper\n"
+else
+    echo -e "\nPerdu\n"
+fi
+```
+
+### Exercice 3. Expressions rationnelles
+
+```touch isnumber.sh```
+```vim isnumber.sh```
+```chmod u+x isnumber.sh```
+```./isnumber.sh 1.1```
+Le script
+```
+#!/bin/bash
+function is_number()
+{
+    re='^[+-]?[0-9]+([.][0-9]+)?$'
+    if ! [[ $1 =~ $re ]] ; then
+        echo "ok"
+        return 1
+    else
+        echo "no"
+        return 0
+    fi
+}
+
+is_number $1
+echo $?
+```
+
+### Exercice 4. Contrôle d’utilisateur
+
+```touch usertest.sh```
+```vim usertest.sh```
+```chmod u+x usertest.sh```
+```./usertest.sh serveur```
+Le script
+```
+#!/bin/bash
+if [ $1 != "" ]
+then
+    if getent passwd $1 > /dev/null 2>&1; then
+        echo "Il existe"
+    else
+        echo "Il n'existe pas"
+    fi
+else
+    echo "Utilisation: $0 nom_utilisateur"
+fi
+```
+
+### Exercice 5. Factorielle
+
+```touch facto.sh```
+```vim facto.sh```
+```chmod u+x facto.sh```
+```./facto.sh 5```
+Le script
+```
+#!/bin/bash
+n=$1
+res=1
+while [ $n -gt 0 ]
+do
+    res=$((res*n))
+    n=$((n-1))
+done
+echo $res
+```
+
+### Exercice 6. Le juste prix
+
+```touch justeprix.sh```
+```vim justeprix.sh```
+```chmod u+x justeprix.sh```
+```./justeprix.sh```
+Le script
+```
+#!/bin/bash
+r=$(( ( RANDOM % 10 )  + 1 ))
+val=0
+
+while [ $val -ne $r ]
+do
+    read -p "Entrez une valeure entre 1 et 1000 : " val
+    if [ $val -lt $r ]
+    then
+        echo "C’est plus !"
+    elif [ $val -gt $r ]
+    then
+        echo "C’est moins !"
+    fi
+done
+echo "Gagné !"
+```
+
+### Exercice 7. Statistiques
 
