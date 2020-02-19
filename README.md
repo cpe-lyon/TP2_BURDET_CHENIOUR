@@ -182,3 +182,43 @@ echo -e "Moyenne : $moy\nMaximum : $max\nMinimum : $min"
 ```
 
 3.
+```
+#!/bin/bash
+declare -a tab
+
+i=0
+val=0
+while [ $val != "q" ]
+do
+    read -p "Entrer un chiffre (q pour arreter) : " val
+    if [ $val != "q" ]
+    then
+        tab[$i]=$val
+        i=$((i+1))
+    fi
+done
+
+moy=0
+min=${tab[0]}
+max=${tab[0]}
+
+j=0
+while [ $j -lt $i ]
+do
+    moy=$((moy+${tab[$j]}))
+    
+    if [ $min -gt ${tab[$j]} ]
+    then
+        min=${tab[$j]}
+    fi
+    if [ $max -lt ${tab[$j]} ]
+    then
+        max=${tab[$j]}
+    fi
+    j=$((j+1))
+done
+
+moy=$((moy/i))
+
+echo -e "Moyenne : $moy\nMaximum : $max\nMinimum : $min"
+```
