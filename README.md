@@ -119,7 +119,7 @@ echo $res
 Le script
 ```
 #!/bin/bash
-r=$(( ( RANDOM % 10 )  + 1 ))
+r=$(( ( RANDOM % 1000 )  + 1 ))
 val=0
 
 while [ $val -ne $r ]
@@ -138,3 +138,47 @@ echo "Gagné !"
 
 ### Exercice 7. Statistiques
 
+1. et 2.
+```touch statistiques.sh```
+```vim statistiques.sh```
+```chmod u+x statistiques.sh```
+```./statistiques.sh 100 200 9```
+Le script
+```
+#!/bin/bash
+declare -a tab
+
+i=0
+while [ "$1" != "" ]
+do
+    tab[$i]=$1
+    shift
+    i=$((i+1))
+done
+
+moy=0
+min=${tab[0]}
+max=${tab[0]}
+
+j=0
+while [ $j -lt $i ]
+do
+    moy=$((moy+${tab[$j]}))
+    
+    if [ $min -gt ${tab[$j]} ]
+    then
+        min=${tab[$j]}
+    fi
+    if [ $max -lt ${tab[$j]} ]
+    then
+        max=${tab[$j]}
+    fi
+    j=$((j+1))
+done
+
+moy=$((moy/i))
+
+echo -e "Moyenne : $moy\nMaximum : $max\nMinimum : $min"
+```
+
+3.
